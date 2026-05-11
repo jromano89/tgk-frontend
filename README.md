@@ -2,7 +2,7 @@
 
 Static TGK Wealth demo front end for the advisor and investor portals.
 
-There is no build step and no project-level npm dependency. The app is plain HTML, CSS, and browser JavaScript.
+There is no JavaScript build step and no project-level npm dependency. The app is plain HTML, CSS, and browser JavaScript.
 
 ## Hosted Backend
 
@@ -38,7 +38,9 @@ Opening `index.html` directly from the filesystem is not supported.
 
 ## Railway
 
-Deploy this repo as a static site from GitHub. Railway's static hosting flow supports zero-configuration static sites, so this repo intentionally has no `package.json`, build command, or start command.
+Deploy this repo from GitHub with the included `Dockerfile`. The container only runs Caddy as a static file server; there is no JavaScript build step, no `package.json`, and no Node runtime.
+
+Leave Railway's build and start commands blank so it uses the Dockerfile. The Caddy config sets the Content Security Policy required by the browser version of Alpine used by these static pages.
 
 If the backend URL changes, update `BACKEND_URL` in `config.js` and redeploy the static site.
 
