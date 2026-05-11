@@ -40,7 +40,7 @@ Opening `index.html` directly from the filesystem is not supported.
 
 Deploy this repo from GitHub with the included `Dockerfile`. The container only runs Caddy as a static file server; there is no JavaScript build step, no `package.json`, and no Node runtime.
 
-Leave Railway's build and start commands blank so it uses the Dockerfile. The Caddy config sets the Content Security Policy required by the browser version of Alpine used by these static pages.
+Leave Railway's build and start commands blank so it uses the Dockerfile. The Caddy config intentionally does not set a Content Security Policy because this is a demo app that loads browser-only dependencies from a CDN and previews completed documents through local `blob:` URLs.
 
 If the backend URL changes, update `BACKEND_URL` in `config.js` and redeploy the static site.
 
