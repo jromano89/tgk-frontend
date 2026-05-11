@@ -693,6 +693,9 @@
     getTransactionsRaw(params) {
       return this.get(this.withDataApp(withSearchParams('/api/data/transactions', params)));
     },
+    deleteTransactionRaw(id) {
+      return this.del(this.withDataApp(getItemPath('/api/data/transactions', id)));
+    },
 
     async getCustomers(params) {
       const customers = await this.getCustomersRaw(params);
@@ -721,6 +724,9 @@
     async getTransactions(params) {
       const transactions = await this.getTransactionsRaw(params);
       return transactions.map(mapTransaction);
+    },
+    deleteTransaction(id) {
+      return this.deleteTransactionRaw(id);
     },
     async updateTask(id, body) {
       return mapTask(await this.updateTaskRaw(id, body));

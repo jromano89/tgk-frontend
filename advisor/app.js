@@ -374,6 +374,22 @@ function advisorApp() {
       }
     },
 
+    async deleteAgreement(agreement, event) {
+      event.stopPropagation();
+      try {
+        await TGK_API.deleteTransaction(agreement.id);
+        this.allAgreements = this.allAgreements.filter(item => item.id !== agreement.id);
+        if (this.selectedContact?.transactions) {
+          this.selectedContact = {
+            ...this.selectedContact,
+            transactions: this.selectedContact.transactions.filter(item => item.id !== agreement.id)
+          };
+        }
+      } catch (e) {
+        console.error('Failed to delete document:', e);
+      }
+    },
+
     goBack() {
       this.stopClientDetailEvents();
       this.setView('dashboard');
