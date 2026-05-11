@@ -9,7 +9,6 @@ const DEFAULT_HEADERS = {
 function account(id, name, accountType, value, ytdReturn, allocations, extra = {}) {
   return {
     id,
-    status: extra.status || 'active',
     name,
     accountType,
     value,
@@ -93,7 +92,7 @@ const customers = [
     email: 'anita.margin@margincallventures.com',
     phone: '(917) 555-0111',
     organization: 'Margin Call Ventures',
-    status: 'review',
+    status: 'expired',
     data: {
       riskProfile: 'Balanced Growth',
       netWorth: 21700000,
@@ -111,7 +110,7 @@ const customers = [
     email: 'robin@vaultstreetholdings.com',
     phone: '(646) 555-0112',
     organization: 'Vault Street Holdings',
-    status: 'active',
+    status: 'verified',
     data: {
       riskProfile: 'Moderate',
       netWorth: 24300000,
@@ -136,7 +135,7 @@ const customers = [
       changePct: 0.013,
       accounts: [
         account('acct-julian-1', 'Founder Liquidity Account', 'Brokerage', 7300000, 0.058, { equity: 57, fixed: 12, alt: 16, cash: 15 }),
-        account('acct-julian-2', 'Short Duration Reserve', 'Cash Management', 5000000, 0.021, { equity: 0, fixed: 28, alt: 0, cash: 72 }, { status: 'pending' })
+        account('acct-julian-2', 'Short Duration Reserve', 'Cash Management', 5000000, 0.021, { equity: 0, fixed: 28, alt: 0, cash: 72 })
       ]
     }
   },
@@ -147,7 +146,7 @@ const customers = [
     email: 'penny@compoundinterestpartners.com',
     phone: '(646) 555-0118',
     organization: 'Compound Interest Partners',
-    status: 'active',
+    status: 'verified',
     data: {
       riskProfile: 'Moderate Growth',
       netWorth: 36200000,
@@ -165,7 +164,7 @@ const customers = [
     email: 'paige@turnkeycapital.co',
     phone: '(917) 555-0119',
     organization: 'Turnkey Capital',
-    status: 'active',
+    status: 'verified',
     data: {
       riskProfile: 'Income Plus',
       netWorth: 19100000,

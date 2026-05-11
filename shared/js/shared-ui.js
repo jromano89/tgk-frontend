@@ -265,6 +265,8 @@ function statusClasses(status) {
   const map = {
     active: 'tgk-status-badge--success',
     review: 'tgk-status-badge--warning',
+    verified: 'tgk-status-badge--success',
+    expired: 'tgk-status-badge--warning',
     pending: 'tgk-status-badge--info',
     completed: 'tgk-status-badge--success',
     sent: 'tgk-status-badge--info',
@@ -476,7 +478,7 @@ function buildFallbackPreviewUrl(transaction, envelopeId) {
     <div class="card">
       <div class="eyebrow">TGK Demo Preview</div>
       <h1>${escapedTitle}</h1>
-      <p>Live DocuSign document content is not available for this envelope record, so the app is showing a lightweight demo preview instead of a 404.</p>
+      <p>Live Docusign document content is not available for this envelope record, so the app is showing a lightweight demo preview instead of a 404.</p>
       <dl>
         <dt>Envelope ID</dt>
         <dd>${escapedEnvelopeId || 'Unavailable'}</dd>
@@ -505,7 +507,7 @@ function buildFallbackHistory(transaction) {
         declined: 'Declined',
         voided: 'Voided'
       })[status] || `Status updated to ${status}`,
-      UserName: 'DocuSign',
+      UserName: 'Docusign',
       LogTime: updatedAt
     });
   }
@@ -724,7 +726,7 @@ function sharedSettingsTemplate() {
 
               <div class="tgk-settings-consent-row tgk-settings-consent-row--separated">
                 <div class="tgk-settings-consent-copy">
-                  <p class="tgk-help-text">Consent is still required before calling DocuSign APIs.</p>
+                  <p class="tgk-help-text">Consent is still required before calling Docusign APIs.</p>
                 </div>
                 <button
                   @click="grantDocusignConsent()"

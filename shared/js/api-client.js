@@ -1,6 +1,6 @@
 /**
  * TGK Demo API Client
- * Thin fetch wrapper that handles errors, the backend base URL, and DocuSign token fetches.
+ * Thin fetch wrapper that handles errors, the backend base URL, and Docusign token fetches.
  * Include this in any frontend via <script src="../shared/js/api-client.js"></script>
  */
 (function () {
@@ -283,6 +283,10 @@
     appName: window.TGK_CONFIG?.appName || '',
     _docusignTokenCache: null,
     _docusignTokenPromise: null,
+
+    getConfiguredAppName() {
+      return String(window.TGK_DEMO?.branding?.appName || this.appName || '').trim();
+    },
 
     async requestResponse(path, options = {}) {
       const method = String(options.method || 'GET').toUpperCase();
@@ -764,10 +768,23 @@
     },
 
     triggerMaestroWorkflow(workflowId, body) {
+      const payload = body && typeof body === 'object' && !Array.isArray(body)
+        ? { ...body }
+        : {};
+      const triggerInputs = payload.trigger_inputs && typeof payload.trigger_inputs === 'object' && !Array.isArray(payload.trigger_inputs)
+        ? { ...payload.trigger_inputs }
+        : {};
+      const appName = this.getConfiguredAppName();
+
+      if (appName) {
+        triggerInputs.appName = appName;
+      }
+      payload.trigger_inputs = triggerInputs;
+
       return this.proxyDocusign({
         method: 'POST',
         url: this.buildDocusignUrl(`/v1/accounts/{accountId}/workflows/${workflowId}/actions/trigger`),
-        body
+        body: payload
       });
     }
   };

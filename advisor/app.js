@@ -17,6 +17,23 @@ function normalizeStatusValue(value) {
   return String(value || '').trim().toLowerCase();
 }
 
+function verificationStatusValue(value) {
+  const normalized = normalizeStatusValue(value);
+  if (normalized === 'active') return 'verified';
+  if (normalized === 'review') return 'expired';
+  if (['expired', 'pending', 'verified'].includes(normalized)) return normalized;
+  return 'pending';
+}
+
+function verificationStatusLabel(value) {
+  const labels = {
+    expired: 'Expired',
+    pending: 'Pending',
+    verified: 'Verified'
+  };
+  return labels[verificationStatusValue(value)];
+}
+
 function agreementTypeForName(name) {
   const normalized = String(name || '').trim().toLowerCase();
   if (!normalized) {
@@ -169,11 +186,11 @@ function advisorApp() {
     },
 
     get pendingReviews() {
-      return this.customers.filter(c => normalizeStatusValue(c.metadata?.status) === 'review').length;
+      return this.customers.filter(c => verificationStatusValue(c.metadata?.status) === 'pending').length;
     },
 
     get complianceAlerts() {
-      return this.customers.filter((customer) => normalizeStatusValue(customer.metadata?.status) !== 'active').length;
+      return this.customers.filter((customer) => verificationStatusValue(customer.metadata?.status) === 'expired').length;
     },
 
     get agreementTypeBreakdown() {
