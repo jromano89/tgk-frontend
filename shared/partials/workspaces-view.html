@@ -1,74 +1,62 @@
-<section class="tgk-page-stack tgk-workspaces-view">
-  <section class="tgk-surface-panel tgk-surface-panel--lg tgk-workspaces-intro">
-    <div class="tgk-workspaces-intro__header">
-      <span class="tgk-workspaces-intro__indicator">Workspaces API</span>
+<section
+  class="tgk-iam-product-panel"
+  x-data="{
+    workspaceInvestorId: '',
+    workspaceInvestorEmail: '',
+    workspaceIncludes: []
+  }">
+  <div class="tgk-iam-product-panel__header">
+    <div class="tgk-iam-product-panel__headline">
+      <h3 class="tgk-iam-product-panel__title">Create a Docusign Workspace</h3>
     </div>
-    <h2 class="tgk-page-title tgk-workspaces-view__title">Central Workspace Hub</h2>
-    <p class="tgk-page-copy tgk-workspaces-view__copy">
-      One shared place to handle pending Docusign work across your team and clients.
-    </p>
-    <div class="tgk-workspaces-tags" role="list" aria-label="Workspace capabilities">
-      <span class="tgk-workspaces-tag" role="listitem">Multiple envelope signing</span>
-      <span class="tgk-workspaces-tag" role="listitem">Multiple document uploads</span>
-      <span class="tgk-workspaces-tag" role="listitem">Pending tasks in one view</span>
+    <span class="tgk-iam-product-panel__source">Workspaces API</span>
+  </div>
+  <form class="tgk-iam-product-form" @submit.prevent>
+    <div class="tgk-settings-field-grid">
+      <label class="tgk-field-card tgk-field-card--compact">
+        <span class="tgk-field-label">Investor</span>
+        <select
+          class="tgk-form-input tgk-form-select"
+          x-model="workspaceInvestorId"
+          @change="workspaceInvestorEmail = (customers.find((customer) => customer.id === $event.target.value)?.email || '')">
+          <option value="">Select an investor</option>
+          <template x-for="customer in customers" :key="customer.id">
+            <option :value="customer.id" x-text="customer.name"></option>
+          </template>
+        </select>
+      </label>
+
+      <label class="tgk-field-card tgk-field-card--compact" x-show="workspaceInvestorId" x-cloak>
+        <span class="tgk-field-label">Investor Email</span>
+        <input
+          class="tgk-form-input"
+          type="email"
+          x-model="workspaceInvestorEmail"
+          autocomplete="email">
+      </label>
     </div>
-  </section>
 
-  <section class="tgk-surface-panel tgk-surface-panel--lg">
-    <div class="tgk-panel-heading tgk-panel-heading--spaced">
-      <h3 class="tgk-panel-title">Create Workspace</h3>
-    </div>
-
-    <form
-      class="tgk-workspaces-form"
-      @submit.prevent="workspaceStatus = 'Workspace request captured in this session.'">
-      <div class="tgk-settings-field-grid">
-        <label class="tgk-field-card tgk-field-card--compact">
-          <span class="tgk-field-label">Workspace Name</span>
-          <input
-            class="tgk-form-input"
-            type="text"
-            value="Account Onboarding - New Investor"
-            autocomplete="off">
+    <div class="tgk-field-card tgk-field-card--compact tgk-iam-product-options">
+      <div class="tgk-field-label">Workspace Contents</div>
+      <div class="tgk-iam-product-options__title">What should be included in the workspace?</div>
+      <div class="tgk-iam-product-option-list">
+        <label class="tgk-iam-product-option">
+          <input type="checkbox" value="esign-template-1" x-model="workspaceIncludes">
+          <span>eSign template 1</span>
         </label>
-
-        <label class="tgk-field-card tgk-field-card--compact">
-          <span class="tgk-field-label">Template</span>
-          <select class="tgk-form-input tgk-form-select">
-            <option value="brokerage" selected>Brokerage Account Onboarding</option>
-            <option value="trust">Trust Account Onboarding</option>
-          </select>
+        <label class="tgk-iam-product-option">
+          <input type="checkbox" value="esign-template-2" x-model="workspaceIncludes">
+          <span>eSign template 2</span>
         </label>
-
-        <label class="tgk-field-card tgk-field-card--compact">
-          <span class="tgk-field-label">Primary Contact Name</span>
-          <input
-            class="tgk-form-input"
-            type="text"
-            :placeholder="portalContactField($data, 'name', 'Jane Smith')"
-            autocomplete="off">
-        </label>
-
-        <label class="tgk-field-card tgk-field-card--compact">
-          <span class="tgk-field-label">Primary Contact Email</span>
-          <input
-            class="tgk-form-input"
-            type="email"
-            :placeholder="portalContactField($data, 'email', 'jane.smith@example.com')"
-            autocomplete="off">
+        <label class="tgk-iam-product-option">
+          <input type="checkbox" value="upload-document-1" x-model="workspaceIncludes">
+          <span>Upload a document 1</span>
         </label>
       </div>
-
-      <div class="tgk-inline-actions tgk-workspaces-form__actions">
-        <button type="submit" class="tgk-button tgk-button--primary">Create Workspace</button>
-      </div>
-    </form>
-
-    <div class="tgk-banner tgk-banner--info tgk-workspaces-status" x-show="workspaceStatus" x-cloak>
-      <div>
-        <div class="tgk-banner__label">Status</div>
-        <div class="tgk-banner__meta" x-text="workspaceStatus"></div>
-      </div>
     </div>
-  </section>
+
+    <div class="tgk-iam-product-actions">
+      <button type="button" class="tgk-button tgk-button--primary">Create Workspace</button>
+    </div>
+  </form>
 </section>
